@@ -14,22 +14,26 @@ import { useAppSelector } from "./store/hooks";
 import { selectUser } from "./store/user/userSlice";
 function App() {
   const user = useAppSelector(selectUser);
-  console.log(user);
-  // const [logedinUser] = useAuthState(auth);
-  // const user = getAuth().currentUser;
+  const [isLogged, setIsLogged] = React.useState(user?.isLogin);
+  // console.log(user);
+  // const [user] = useAuthState(auth);
   // const [user, setUser] = React.useState(() => {
   //   const auth = getAuth();
   //   return auth.currentUser;
   // });
-  // const [user, setUser] = React.useState(logedinUser);
+  // const [userLoggedIn, setUserLoggedIn] = React.useState(false);
 
   // React.useEffect(() => {
+  //   const user = getAuth().currentUser;
   //   // setUser(getAuth().currentUser);
   //   // console.log(getAuth().currentUser);
+  //   console.log(user);
+  //   if (user) {
+  //     setUserLoggedIn(true);
+  //   }
 
-  //   setUser(user);
   //   // console.log("useEffect called");
-  // }, [user]);
+  // }, []);
 
   // React.useEffect(() => {
   //   setUser(logedinUser);
@@ -37,9 +41,12 @@ function App() {
 
   // console.log(user);
 
-  if (!user?.email) {
+  if (!user?.isLogin) {
     return <Signin />;
   } else return <AllRoutes />;
+  // if (!userLoggedIn) {
+  //   return <Signin />;
+  // } else return <AllRoutes />;
 }
 
 export default App;

@@ -3,8 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { User } from './types';
 
 const initialState: any = {
-    name: '',
-    email: ''
+    isLogin: false,
+    email: '',
+    name: ''
 }
 
 export const userSlice = createSlice({
@@ -16,11 +17,18 @@ export const userSlice = createSlice({
         addUser: (state, action: PayloadAction<any>) => {
             state.name = action.payload.name;
             state.email = action.payload.email;
+            state.isLogin = action.payload.isLogin;
+            state.photoURL = action.payload.photoURL;
+            // state. = action.payload;
+        },
+        logout: (state) => {
+
+            state.isLogin = false;
         }
     }
 })
 
-export const { addUser } = userSlice.actions
+export const { addUser, logout } = userSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectUser = (state: RootState) => state.user
