@@ -30,6 +30,7 @@ const Signin = () => {
     // console.log("User signed in", getAuth().currentUser);
     const user = getAuth().currentUser;
     // console.log({ name: user?.displayName, email: user?.email });
+    console.log("PhotoURL", user);
     dispatch(
       addUser({
         name: user?.displayName,

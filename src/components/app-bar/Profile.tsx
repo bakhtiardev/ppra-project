@@ -76,6 +76,7 @@ const Profile = (props: { open: boolean }) => {
 
   //   },[profileOption])
   const photoURL = user?.photoURL;
+  
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">

@@ -1,5 +1,6 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
+import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -15,6 +16,8 @@ import AdbIcon from "@mui/icons-material/Adb";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Badge from "@mui/material/Badge";
 import Profile from "./Profile";
+import PlagiarismIcon from "@mui/icons-material/Plagiarism";
+import { makeStyles } from "@mui/styles";
 
 const pages = ["Dashboard", "Contact", "About"];
 const settings = ["Profile", "Account", "Logout"];
@@ -68,6 +71,38 @@ function Appbar(props: { open: boolean; toggleDrawer: any }) {
         >
           <MenuIcon />
         </IconButton>
+        <PlagiarismIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+        <Typography
+          variant="h6"
+          noWrap
+          component="a"
+          href="/"
+          sx={{
+            // flexGrow: 1,
+            mr: 1,
+            display: { xs: "none", md: "flex" },
+            fontFamily: "inherit",
+            fontSize: 18,
+            fontWeight: 550,
+            // letterSpacing: '.3rem',
+            color: "inherit",
+            textDecoration: "none",
+          }}
+        >
+          PPRA Monitor
+        </Typography>
+        <Divider
+          orientation="vertical"
+          variant="middle"
+          sx={{
+            width: "1.2px",
+            height: "25px",
+            backgroundColor: "white",
+            marginRight: 1.5,
+            marginLeft: 0.5,
+          }}
+          // flexItem
+        />
         <Typography
           component="h1"
           variant="h6"
@@ -79,7 +114,7 @@ function Appbar(props: { open: boolean; toggleDrawer: any }) {
         </Typography>
 
         <IconButton color="inherit">
-          <Badge badgeContent={4} color="secondary">
+          <Badge badgeContent={4} color="warning">
             <NotificationsIcon />
           </Badge>
         </IconButton>

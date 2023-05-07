@@ -7,6 +7,7 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
@@ -17,6 +18,7 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { mainListItems, secondaryListItems } from "./listItems";
+import Copyright from "../copy-right-footer/Copyright";
 import Chart from "./Chart";
 // import { auth } from "./firebase";
 
@@ -27,24 +29,9 @@ import { getAuth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useAppSelector } from "../../store/hooks";
 import { selectUser } from "../../store/user/userSlice";
+import Dropzone from "../dropzone/Dropzone";
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        NUST
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import axios from "axios";
 
 const drawerWidth: number = 240;
 
@@ -105,10 +92,39 @@ function DashboardContent() {
   const user = useAppSelector(selectUser);
   const displayName = user?.name;
   const [open, setOpen] = React.useState(false);
+  const [file, setFile] = React.useState(null);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
+  const handleSubmit = async () => {
+    // console.log("File", file);
+    if (file) {
+      console.log("File", file);
+
+      let res = await uploadFile(file);
+      console.log("Res", res.data);
+      
+    } else {
+      // console.log("No File Selected");
+    }
+  };
+
+  const uploadFile = async (file: any) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    // formData=null
+    return await axios.post("http://127.0.0.1:5000/upload", formData, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+  };
+  React.useEffect(() => {
+    fetch("http://127.0.0.1:5000/")
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  }, []);
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -165,20 +181,49 @@ function DashboardContent() {
                 </Typography>
               </Grid>
               {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
+              <Grid item xs={12} md={12} lg={12}>
+                {/* <Paper
                   sx={{
                     p: 2,
+                    alignContent: "center",
+                    justifyContent: "center",
+
                     display: "flex",
-                    flexDirection: "column",
-                    height: 240,
+                    // height: "10rem",
+                    // flexDirection: "row",
+                  }}
+                ></Paper> */}
+                <Dropzone setFile={setFile} />
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexFlow: "column",
+                    p: 2,
                   }}
                 >
-                  {/* <Chart /> */}
-                </Paper>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      fontSize: 20,
+                      fontWeight: 600,
+                      width: "40%",
+                      height: "50px",
+                    }}
+                    size="large"
+                    onClick={handleSubmit}
+                    // fullWidth
+                  >
+                    Analyze
+                  </Button>
+                </Box>
+                {/* <Chart /> */}
+                {/* </Paper> */}
               </Grid>
               {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
+
+              {/* <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
                     p: 2,
@@ -186,10 +231,10 @@ function DashboardContent() {
                     flexDirection: "column",
                     height: 240,
                   }}
-                >
-                  {/* <Deposits /> */}
-                </Paper>
-              </Grid>
+                > */}
+              {/* <Deposits /> */}
+              {/* </Paper>
+              </Grid> */}
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
