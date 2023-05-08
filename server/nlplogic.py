@@ -4,6 +4,11 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import PyPDF2
+import numerizer
+from spacy.matcher import Matcher
+import re
+import tabula
+from numerizer import numerize
 
 nlp = spacy.load("en_core_web_sm")
 lemmatizer = WordNetLemmatizer()
@@ -29,8 +34,8 @@ def preprocess(text):
 
 
 def genText(file):
-    # file = request.files['file']
-    # Read the PDF file using PyPDF2
+
+    # with open('sample.pdf','rb') as pdf_file:
     pdf_reader = PyPDF2.PdfReader(file)
     text = ''
     for page in pdf_reader.pages:
@@ -38,8 +43,9 @@ def genText(file):
 
     clean_text = preprocess(text)
 
-    # Tokenize the text data
-    tokens = nlp(clean_text)
+    return clean_text
 
-    # Return the text content of the PDF file as a response
-    return tokens
+
+def getTokenText(file):
+    doc = nlp(genText(file))
+    return doc

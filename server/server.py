@@ -1,11 +1,19 @@
+import tabula
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from logicchecks import *
 from nlplogic import *
+from brandName import getBrandName
+from webLink import *
+from contractAmount import getContractAmount
 from werkzeug.utils import secure_filename
+import os
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = '.\docs'
 CORS(app)
+
+data = {}
 
 
 @cross_origin()
@@ -24,10 +32,32 @@ def upload_file():
         filename = secure_filename(file.filename)
         # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        res = genText(file)
-        return res, 200
+
+        return getAll(file), 200
     else:
         return {'message': 'Invalid file type'}, 400
+
+
+def getAll(file):
+    contractAmount = getContractAmount(file)
+    brandName = getBrandName(file)
+    websiteLinks = getWebsiteLinks(file)
+    if (contractAmount):
+        data['contract_amount'] = contractAmount[0]
+    else:
+        data['contract_amount'] = None
+
+    if (brandName):
+        data['brand_name'] = brandName
+    else:
+        data['brand_name'] = None
+
+    if (websiteLinks):
+        data['web_links'] = websiteLinks
+    else:
+        data['web_links'] = None
+
+    return data
 
 
 @app.route('/')

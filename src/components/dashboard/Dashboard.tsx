@@ -104,7 +104,6 @@ function DashboardContent() {
 
       let res = await uploadFile(file);
       console.log("Res", res.data);
-      
     } else {
       // console.log("No File Selected");
     }
@@ -114,14 +113,18 @@ function DashboardContent() {
     const formData = new FormData();
     formData.append("file", file);
     // formData=null
-    return await axios.post("http://127.0.0.1:5000/upload", formData, {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    });
+    return await axios.post(
+      `${import.meta.env.VITE_API_URL}/upload`,
+      formData,
+      {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      }
+    );
   };
   React.useEffect(() => {
-    fetch("http://127.0.0.1:5000/")
+    fetch(`${import.meta.env.VITE_API_URL}`)
       .then((response) => response.json())
       .then((data) => console.log(data));
   }, []);
