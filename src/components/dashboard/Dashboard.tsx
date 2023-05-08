@@ -93,6 +93,7 @@ function DashboardContent() {
   const displayName = user?.name;
   const [open, setOpen] = React.useState(false);
   const [file, setFile] = React.useState(null);
+  const [output, setOutput] = React.useState(null);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -239,6 +240,7 @@ function DashboardContent() {
               {/* </Paper>
               </Grid> */}
               {/* Recent Orders */}
+              
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                   {/* <Orders /> */}
