@@ -5,7 +5,9 @@ from logicchecks import *
 from nlplogic import *
 from brandName import getBrandName
 from webLink import *
+from bidopenclose import getBidTimes
 from contractAmount import getContractAmount
+from twopercent import getTwoPercent
 from werkzeug.utils import secure_filename
 import os
 
@@ -42,6 +44,8 @@ def getAll(file):
     contractAmount = getContractAmount(file)
     brandName = getBrandName(file)
     websiteLinks = getWebsiteLinks(file)
+    bidTime = getBidTimes(file)
+    twoPercentWords = getTwoPercent(file)
     if (contractAmount):
         data['contract_amount'] = contractAmount[0]
     else:
@@ -56,6 +60,16 @@ def getAll(file):
         data['web_links'] = websiteLinks
     else:
         data['web_links'] = None
+
+    if (bidTime):
+        data['bid_times'] = bidTime
+    else:
+        data['bid_times'] = None
+
+    if (twoPercentWords):
+        data['two_percent'] = twoPercentWords
+    else:
+        data['two_percent'] = None
 
     return data
 

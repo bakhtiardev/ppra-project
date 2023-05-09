@@ -32,6 +32,8 @@ import { selectUser } from "../../store/user/userSlice";
 import Dropzone from "../dropzone/Dropzone";
 
 import axios from "axios";
+import PpraAccordian from "../ppra-accordian/PpraAccordian";
+import ProgressDrop from "../progress-backdrop/ProgressDrop";
 
 const drawerWidth: number = 240;
 
@@ -94,6 +96,7 @@ function DashboardContent() {
   const [open, setOpen] = React.useState(false);
   const [file, setFile] = React.useState(null);
   const [output, setOutput] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -104,7 +107,8 @@ function DashboardContent() {
       console.log("File", file);
 
       let res = await uploadFile(file);
-      console.log("Res", res.data);
+      console.log(res.data);
+      setOutput(res.data);
     } else {
       // console.log("No File Selected");
     }
@@ -113,16 +117,17 @@ function DashboardContent() {
   const uploadFile = async (file: any) => {
     const formData = new FormData();
     formData.append("file", file);
+    setLoading(true);
     // formData=null
-    return await axios.post(
-      `${import.meta.env.VITE_API_URL}/upload`,
-      formData,
-      {
+    return await axios
+      .post(`${import.meta.env.VITE_API_URL}/upload`, formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
-      }
-    );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   React.useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}`)
@@ -240,12 +245,15 @@ function DashboardContent() {
               {/* </Paper>
               </Grid> */}
               {/* Recent Orders */}
-              
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  {/* <Orders /> */}
-                </Paper>
-              </Grid>
+              {loading && <ProgressDrop open={loading} />}
+              {output && (
+                <Grid item xs={12}>
+                  <PpraAccordian data={output} />
+                </Grid>
+              )}
+              {/* <Grid item xs={12}>
+                <PpraAccordian data={output} />
+              </Grid> */}
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
