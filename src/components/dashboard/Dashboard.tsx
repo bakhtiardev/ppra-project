@@ -130,9 +130,9 @@ function DashboardContent() {
       });
   };
   React.useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}`)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    // fetch(`${import.meta.env.VITE_API_URL}`)
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data));
   }, []);
   return (
     <ThemeProvider theme={mdTheme}>

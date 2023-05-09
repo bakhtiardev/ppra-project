@@ -60,15 +60,6 @@ export default function PpraAccordian(props: { data: any }) {
                   <Typography variant="h6">
                     System detected Contract Amount = {data.contract_amount}
                   </Typography>
-                  <TextField
-                    id="contractAmount"
-                    label="Contract Amount"
-                    value={contractAmount}
-                    size="small"
-                    onChange={() => setContractAmount(e.target.value)}
-                    margin="dense"
-                    variant="outlined"
-                  />
                   {contractAmount > 10000000 ? (
                     <Typography
                       variant="subtitle1"
@@ -83,7 +74,7 @@ export default function PpraAccordian(props: { data: any }) {
                       sx={{ backgroundColor: red[200] }}
                     >
                       This project must have integrity pact check otherwise it
-                      will violate the ppra regulations”
+                      will violate the ppra regulations
                     </Typography>
                   )}
                 </Box>
@@ -98,7 +89,7 @@ export default function PpraAccordian(props: { data: any }) {
                     label="Contract Amount"
                     type="number"
                     value={""}
-                    onChange={() => setContractAmount(e.target.value)}
+                    onChange={(e) => setContractAmount(e.target.value)}
                     margin="dense"
                     variant="outlined"
                   />
@@ -138,7 +129,35 @@ export default function PpraAccordian(props: { data: any }) {
                 origin of the country or similar classification.
               </Typography>
             </ListItem>
-            <ListItem></ListItem>
+            <ListItem>
+              {data?.brand_name ? (
+                <Box>
+                  <Typography variant="h6">
+                    System detected Brand Name = {data.brand_name}
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ backgroundColor: red[200] }}
+                  >
+                    This Project is against the specification rule, it should
+                    not have contain any brand name
+                  </Typography>
+                </Box>
+              ) : (
+                <Box>
+                  <Typography variant="h6">
+                    System detected No Brand Name
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ backgroundColor: green[200] }}
+                  >
+                    This Project follows the specification rule, it does not
+                    contain any brand name
+                  </Typography>
+                </Box>
+              )}
+            </ListItem>
             <ListItem>
               <Typography></Typography>
             </ListItem>
