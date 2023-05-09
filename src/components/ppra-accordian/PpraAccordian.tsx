@@ -16,28 +16,45 @@ import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import List from "@mui/material/List";
 import Link from "@mui/material/Link";
-
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+dayjs.extend(customParseFormat);
+
 export default function PpraAccordian(props: { data: any }) {
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const { data } = props;
-  let { contract_amount, brand_name, web_links, bid_times} = data ?? {};
+  let { contract_amount, brand_name, web_links, bid_times } = data ?? {};
 
   const [contractAmount, setContractAmount] = React.useState(
     data?.contract_amount
   );
   const [dateOpen, setDateOpen] = React.useState<Dayjs | null>(dayjs());
   const [dateClose, setDateClose] = React.useState<Dayjs | null>(dayjs());
-  
-  const [openTime, setOpenTime] = React.useState<Dayjs | null>(bid_times[1]);
-  const [closeTime, setCloseTime] = React.useState<Dayjs | null>(bid_times[0]);
 
-  const timeCalc = (opentime, closeTime) => {
-    var start = moment(startDate);
-    var end = moment(endDate);
-    console.log(end.diff(start, "hours", true) );
+  const [openTime, setOpenTime] = React.useState<Dayjs | null>(dayjs());
+  const [closeTime, setCloseTime] = React.useState<Dayjs | null>(dayjs());
+
+  function convertTo12Time(timestr: any): any {
+    if (timestr !== null)
+      return (
+        String(timestr).substring(0, 2) + ":" + String(timestr).substring(2)
+      );
   }
+  console.log(
+    "Time diff",
+    convertTo12Time(bid_times[0]),
+    convertTo12Time(bid_times[1])
+  );
+  const timeCalc = (opentime, closeTime) => {};
+  console.log(
+    "Time Diff2",
+    timeCalc(convertTo12Time(bid_times[1]), convertTo12Time(bid_times[0]))
+  );
 
+  // const minuteDiff = timeCalc(openTime, closeTime);
+  // console.log("Min Diff", minuteDiff);
+  console.log(openTime, closeTime);
   let hours = dateClose.diff(dateOpen, "hours");
   const daysDiff = Math.floor(hours / 24);
 
@@ -247,7 +264,8 @@ export default function PpraAccordian(props: { data: any }) {
               ) : (
                 <Box>
                   <Typography variant="h6">
-                    As Project is NOT under range from 500,000 and 3000000
+                    This Project is NOT under range from 500,000/Rs and
+                    3000000/Rs
                   </Typography>
 
                   {data?.web_links.length > 0 ? (
@@ -327,8 +345,8 @@ export default function PpraAccordian(props: { data: any }) {
                   variant="subtitle1"
                   sx={{ backgroundColor: green[200] }}
                 >
-                  This Project contains atleast 15 days difference in date of
-                  publishing and date of submission
+                  This Project satisfies atleast 15 days difference check, In
+                  the date of publishing and date of submission
                 </Typography>
               ) : (
                 <Typography
@@ -433,7 +451,45 @@ export default function PpraAccordian(props: { data: any }) {
                 bids
               </Typography>
             </ListItem>
-            <ListItem></ListItem>
+            {/* <ListItem>
+              {minuteDiff >= 30 ? (
+                <Typography variant="h6" sx={{ backgroundColor: green[200] }}>
+                  The System detected, Bid Opening time {openTime} and Closing
+                  Bid Time {closeTime} with {minuteDiff} minutes difference
+                  which, satisfies Rule 28
+                </Typography>
+              ) : data?.bid_times ? (
+                <Typography variant="h6" sx={{ backgroundColor: red[200] }}>
+                  The System detected, Bid Opening time {openTime} and Closing
+                  Bid Time {closeTime} with {minuteDiff} minutes difference
+                  which, which is Less than 30 minutes, Hence this project fails
+                  this rule.
+                </Typography>
+              ) : (
+                <Box>
+                  <Typography variant="h6">
+                    The System were not able to detect Opening and closing bid
+                    times Please Enter times below,
+                  </Typography>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoItem label="Date of Publishing">
+                      <TimePicker
+                        label="Opening Bid Time"
+                        value={openTime}
+                        onChange={(newValue) => setOpenTime(newValue)}
+                      />
+                    </DemoItem>
+                    <DemoItem label="Date of Submission">
+                      <TimePicker
+                        label="Closing Bid Time"
+                        value={closeTime}
+                        onChange={(newValue) => setCloseTime(newValue)}
+                      />
+                    </DemoItem>
+                  </LocalizationProvider>
+                </Box>
+              )}
+            </ListItem> */}
           </List>
         </AccordionDetails>
       </Accordion>
