@@ -5,20 +5,41 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { red, green } from "@mui/material/colors";
 import ListItem from "@mui/material/ListItem";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import dayjs, { Dayjs } from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Box, Typography, TextField, Button, Divider } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import StarIcon from "@mui/icons-material/Star";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import List from "@mui/material/List";
+import Link from "@mui/material/Link";
+
+import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 export default function PpraAccordian(props: { data: any }) {
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const { data } = props;
-  let { contract_amount, brand_name, web_links } = data ?? {};
+  let { contract_amount, brand_name, web_links, bid_times} = data ?? {};
 
   const [contractAmount, setContractAmount] = React.useState(
     data?.contract_amount
   );
+  const [dateOpen, setDateOpen] = React.useState<Dayjs | null>(dayjs());
+  const [dateClose, setDateClose] = React.useState<Dayjs | null>(dayjs());
+  
+  const [openTime, setOpenTime] = React.useState<Dayjs | null>(bid_times[1]);
+  const [closeTime, setCloseTime] = React.useState<Dayjs | null>(bid_times[0]);
+
+  const timeCalc = (opentime, closeTime) => {
+    var start = moment(startDate);
+    var end = moment(endDate);
+    console.log(end.diff(start, "hours", true) );
+  }
+
+  let hours = dateClose.diff(dateOpen, "hours");
+  const daysDiff = Math.floor(hours / 24);
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -158,9 +179,6 @@ export default function PpraAccordian(props: { data: any }) {
                 </Box>
               )}
             </ListItem>
-            <ListItem>
-              <Typography></Typography>
-            </ListItem>
           </List>
         </AccordionDetails>
       </Accordion>
@@ -172,16 +190,91 @@ export default function PpraAccordian(props: { data: any }) {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel3bh-content"
           id="panel3bh-header"
+          sx={{
+            backgroundColor:
+              data?.contract_amount >= 500000 &&
+              data?.contract_amount <= 3000000 &&
+              data?.web_links
+                ? green[400]
+                : red[400],
+            justifyContent: "space-between",
+            alignItems: "center",
+            color: "white",
+          }}
         >
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
             Rule 12 : Advertisement Check
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer
-            sit amet egestas eros, vitae egestas augue. Duis vel est augue.
-          </Typography>
+          <List aria-label="contacts">
+            <ListItem>
+              <Typography>
+                Procurements over five hundred thousand Pakistani Rupees and up
+                to the limit of three million Pakistani Rupees shall be
+                advertised on the Authority’s website in the manner and format
+                specified by regulation by the Authority from time to time
+              </Typography>
+            </ListItem>
+            <ListItem>
+              <Typography>
+                All procurement opportunities over three million Pakistani
+                Rupees should be advertised on the Authority’s website as well
+                as in other print media or newspapers having wide circulation.
+              </Typography>
+            </ListItem>
+            <ListItem>
+              {data?.contract_amount >= 500000 &&
+              data?.contract_amount <= 3000000 &&
+              data?.web_links ? (
+                <Box>
+                  <Typography variant="h6">
+                    As Project is under range from 500,000 and 3000000 System
+                    detected Website following websites
+                  </Typography>
+                  {data?.web_links?.map((item: any) => (
+                    <>
+                      <Link href={item}>{item} </Link> <Divider />
+                    </>
+                  ))}
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ backgroundColor: green[200] }}
+                  >
+                    This Project passes Adverstisement Check
+                  </Typography>
+                </Box>
+              ) : (
+                <Box>
+                  <Typography variant="h6">
+                    As Project is NOT under range from 500,000 and 3000000
+                  </Typography>
+
+                  {data?.web_links.length > 0 ? (
+                    <>
+                      <Typography variant="h6">
+                        System detected Website following websites
+                      </Typography>
+                      {data?.web_links?.map((item: any) => (
+                        <>
+                          <Link href={item}>{item} </Link> <Divider />
+                        </>
+                      ))}
+                    </>
+                  ) : (
+                    <Typography>System detected No web links</Typography>
+                  )}
+
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ backgroundColor: red[200] }}
+                  >
+                    This Project fails Adverstisement Check
+                  </Typography>
+                </Box>
+              )}
+            </ListItem>
+          </List>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -192,16 +285,61 @@ export default function PpraAccordian(props: { data: any }) {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel4bh-content"
           id="panel4bh-header"
+          sx={{
+            backgroundColor: daysDiff >= 15 ? green[400] : red[400],
+            justifyContent: "space-between",
+            alignItems: "center",
+            color: "white",
+          }}
         >
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
             Rule 13 : Responce Time
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer
-            sit amet egestas eros, vitae egestas augue. Duis vel est augue.
-          </Typography>
+          <List aria-label="contacts">
+            <ListItem>
+              <Typography>
+                The procuring agency may decide the response time but not in any
+                case it can be less than 15 days for national competitive
+                bidding and no less than 30 days international bidding
+              </Typography>
+            </ListItem>
+            <ListItem>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoItem label="Date of Publishing">
+                  <DateCalendar
+                    value={dateOpen}
+                    onChange={(newValue) => setDateOpen(newValue)}
+                  />
+                </DemoItem>
+                <DemoItem label="Date of Submission">
+                  <DateCalendar
+                    value={dateClose}
+                    onChange={(newValue) => setDateClose(newValue)}
+                  />
+                </DemoItem>
+              </LocalizationProvider>
+            </ListItem>
+            <ListItem>
+              {daysDiff >= 15 ? (
+                <Typography
+                  variant="subtitle1"
+                  sx={{ backgroundColor: green[200] }}
+                >
+                  This Project contains atleast 15 days difference in date of
+                  publishing and date of submission
+                </Typography>
+              ) : (
+                <Typography
+                  variant="subtitle1"
+                  sx={{ backgroundColor: red[200] }}
+                >
+                  This Project fails Responce Time Check
+                </Typography>
+              )}
+            </ListItem>
+          </List>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -212,15 +350,57 @@ export default function PpraAccordian(props: { data: any }) {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
+          sx={{
+            backgroundColor:
+              data?.two_precent || contractAmount >= 15 ? green[400] : red[400],
+            justifyContent: "space-between",
+            alignItems: "center",
+            color: "white",
+          }}
         >
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
             Rule 25 : Bid Security
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
+          <List aria-label="contacts">
+            <ListItem>
+              <Typography>
+                The Bid Security must be generally, 2 to 5 %. We will consider
+                2%.
+              </Typography>
+            </ListItem>
+
+            <ListItem>
+              {contractAmount ? (
+                <Typography
+                  variant="subtitle1"
+                  sx={{ backgroundColor: green[200] }}
+                >
+                  The Bid Security must in range from 2% to 5% of Contract
+                  Amount which {contractAmount * 0.02} and{" "}
+                  {contractAmount * 0.05} respectively
+                </Typography>
+              ) : data?.two_percent ? (
+                <Typography
+                  variant="subtitle1"
+                  sx={{ backgroundColor: green[200] }}
+                >
+                  The System detected, document mentions bid security of 2%
+                </Typography>
+              ) : (
+                <Typography
+                  variant="subtitle1"
+                  sx={{ backgroundColor: red[200] }}
+                >
+                  The Bid Security is not present in document
+                </Typography>
+              )}
+            </ListItem>
+          </List>
+          {/* <Typography>
             Generally, 2 to 5 %. We are considering for simplicity 2%.
-          </Typography>
+          </Typography> */}
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -231,20 +411,30 @@ export default function PpraAccordian(props: { data: any }) {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
+          sx={{
+            backgroundColor: data?.bid_times ? green[400] : red[400],
+            justifyContent: "space-between",
+            alignItems: "center",
+            color: "white",
+          }}
         >
+          x
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
             Rule 28 : Opening of Bids
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            The date for opening of bids and the last date for the submission of
-            bids shall be the same.
-          </Typography>
-          <Typography>
-            The bids shall be opened at least thirty minutes after the deadline
-            for submission of bids
-          </Typography>
+          <List aria-label="contacts">
+            <ListItem>
+              <Typography>
+                The date for opening of bids and the last date for the
+                submission of bids shall be the same. The bids shall be opened
+                at least thirty minutes after the deadline for submission of
+                bids
+              </Typography>
+            </ListItem>
+            <ListItem></ListItem>
+          </List>
         </AccordionDetails>
       </Accordion>
       <Accordion
