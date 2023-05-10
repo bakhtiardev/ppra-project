@@ -18,6 +18,7 @@ import Badge from "@mui/material/Badge";
 import Profile from "./Profile";
 import PlagiarismIcon from "@mui/icons-material/Plagiarism";
 import { makeStyles } from "@mui/styles";
+import NustLogo from "../../assets/nust.png";
 
 const pages = ["Dashboard", "Contact", "About"];
 const settings = ["Profile", "Account", "Logout"];
@@ -34,7 +35,7 @@ function Appbar(props: { open: boolean; toggleDrawer: any }) {
     null | string | HTMLElement
   >(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOxpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
     // console.log("handleOpenNavMenu", event.currentTarget);
   };
@@ -71,7 +72,7 @@ function Appbar(props: { open: boolean; toggleDrawer: any }) {
         >
           <MenuIcon />
         </IconButton>
-        <PlagiarismIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+        <Avatar alt="NUST" src={NustLogo} sx={{ width: 43, height: 43 }} />
         <Typography
           variant="h6"
           noWrap
@@ -79,17 +80,18 @@ function Appbar(props: { open: boolean; toggleDrawer: any }) {
           href="/"
           sx={{
             // flexGrow: 1,
+            ml: 1,
             mr: 1,
             display: { xs: "none", md: "flex" },
             fontFamily: "inherit",
             fontSize: 18,
             fontWeight: 550,
-            // letterSpacing: '.3rem',
+            letterSpacing: ".05rem",
             color: "inherit",
             textDecoration: "none",
           }}
         >
-          PPRA Monitor
+          NUST
         </Typography>
         <Divider
           orientation="vertical"
@@ -103,7 +105,27 @@ function Appbar(props: { open: boolean; toggleDrawer: any }) {
           }}
           // flexItem
         />
+        <PlagiarismIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
         <Typography
+          variant="h6"
+          noWrap
+          component="a"
+          href="/"
+          sx={{
+            flexGrow: 1,
+            mr: 1,
+            display: { xs: "none", md: "flex" },
+            fontFamily: "inherit",
+            fontSize: 18,
+            fontWeight: 550,
+            // letterSpacing: '.3rem',
+            color: "inherit",
+            textDecoration: "none",
+          }}
+        >
+          PPRA Monitor
+        </Typography>
+        {/* <Typography
           component="h1"
           variant="h6"
           color="inherit"
@@ -111,7 +133,7 @@ function Appbar(props: { open: boolean; toggleDrawer: any }) {
           sx={{ flexGrow: 1 }}
         >
           Dashboard
-        </Typography>
+        </Typography> */}
 
         <IconButton color="inherit">
           <Badge badgeContent={4} color="warning">

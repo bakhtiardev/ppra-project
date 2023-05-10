@@ -36,6 +36,22 @@ export default function PpraAccordian(props: { data: any }) {
   const [openTime, setOpenTime] = React.useState<Dayjs | null>(dayjs());
   const [closeTime, setCloseTime] = React.useState<Dayjs | null>(dayjs());
 
+  // console.log("Time diff", bid_times[0], bid_times[1]);
+  // const timeCalc = (opentime, closeTime) => {};
+  function findTimeDiff(time1, time2) {
+    let hourDiff = parseInt(time2 / 100 - time1 / 100 - 1);
+
+    // difference between minutes
+    let minDiff = parseInt((time2 % 100) + (60 - (time1 % 100)));
+
+    if (minDiff >= 60) {
+      hourDiff++;
+      minDiff = minDiff - 60;
+    }
+
+    return minDiff;
+  }
+  console.log("time1", openTime, "time2", closeTime);
   function convertTo12Time(timestr: any): any {
     if (timestr !== null)
       return (
@@ -43,13 +59,9 @@ export default function PpraAccordian(props: { data: any }) {
       );
   }
 
-  console.log(
-    "Time diff",
-    convertTo12Time(bid_times[0]),
-    convertTo12Time(bid_times[1])
-  );
-  // const timeCalc = (opentime, closeTime) => {};
+  let timeDiff = null;
   console.log(data);
+  if (data?.bid_times) timeDiff = findTimeDiff(bid_times[0], bid_times[1]);
 
   // const minuteDiff = timeCalc(openTime, closeTime);
   // console.log("Min Diff", minuteDiff);
@@ -71,7 +83,7 @@ export default function PpraAccordian(props: { data: any }) {
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           sx={{
-            backgroundColor: contractAmount > 10000000 ? green[400] : red[400],
+            backgroundColor: contractAmount ? green[400] : red[400],
             justifyContent: "space-between",
             alignItems: "center",
             color: "white",
@@ -97,24 +109,6 @@ export default function PpraAccordian(props: { data: any }) {
                   <Typography variant="h6">
                     System detected Contract Amount = {data.contract_amount}
                   </Typography>
-                  {contractAmount > 10000000 ? (
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ backgroundColor: green[200] }}
-                    >
-                      This Project is accordance with the integrity pact check,
-                      as the amount is not greater than 10 million
-                    </Typography>
-                  ) : (
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ backgroundColor: red[200] }}
-                    >
-                      As entered amount is less than 10 million, This project
-                      must have integrity pact check otherwise it will violate
-                      the ppra regulations
-                    </Typography>
-                  )}
                 </Box>
               ) : (
                 <Box>
@@ -132,6 +126,26 @@ export default function PpraAccordian(props: { data: any }) {
                     variant="outlined"
                   />
                 </Box>
+              )}
+            </ListItem>
+            <ListItem>
+              {contractAmount > 10000000 ? (
+                <Typography
+                  variant="subtitle1"
+                  sx={{ backgroundColor: green[200] }}
+                >
+                  This project needs an integrity pact check as per PPRA Rules,
+                  as the amount is greater than 10 million
+                </Typography>
+              ) : (
+                <Typography
+                  variant="subtitle1"
+                  sx={{ backgroundColor: red[200] }}
+                >
+                  As entered amount is less than 10 million, This project does
+                  not needs an integrity pact check as per PPRA Rules, as the
+                  contract amount is less than 10 million
+                </Typography>
               )}
             </ListItem>
           </List>
@@ -436,7 +450,6 @@ export default function PpraAccordian(props: { data: any }) {
             color: "white",
           }}
         >
-          x
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
             Rule 28 : Opening of Bids
           </Typography>
@@ -451,45 +464,64 @@ export default function PpraAccordian(props: { data: any }) {
                 bids
               </Typography>
             </ListItem>
-            {/* <ListItem>
-              {minuteDiff >= 30 ? (
-                <Typography variant="h6" sx={{ backgroundColor: green[200] }}>
-                  The System detected, Bid Opening time {openTime} and Closing
-                  Bid Time {closeTime} with {minuteDiff} minutes difference
-                  which, satisfies Rule 28
+            <ListItem>
+              {timeDiff >= 30 && bid_times ? (
+                <Typography
+                  variant="subtitle1"
+                  sx={{ backgroundColor: green[200] }}
+                >
+                  The System detected, Bid Opening time{" "}
+                  {convertTo12Time(bid_times[1])} and Closing Bid Time{" "}
+                  {convertTo12Time(bid_times[0])} with {timeDiff} minutes
+                  difference which, satisfies Rule 28
                 </Typography>
-              ) : data?.bid_times ? (
-                <Typography variant="h6" sx={{ backgroundColor: red[200] }}>
-                  The System detected, Bid Opening time {openTime} and Closing
-                  Bid Time {closeTime} with {minuteDiff} minutes difference
-                  which, which is Less than 30 minutes, Hence this project fails
-                  this rule.
+              ) : timeDiff < 30 && bid_times ? (
+                <Typography
+                  variant="subtitle1"
+                  sx={{ backgroundColor: red[200] }}
+                >
+                  The System detected, Bid Opening time{" "}
+                  {convertTo12Time(bid_times[1])} and Closing Bid Time{" "}
+                  {convertTo12Time(bid_times[0])} with {timeDiff} minutes
+                  difference which, which is Less than 30 minutes, Hence this
+                  project fails this rule.
                 </Typography>
               ) : (
-                <Box>
-                  <Typography variant="h6">
-                    The System were not able to detect Opening and closing bid
-                    times Please Enter times below,
-                  </Typography>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoItem label="Date of Publishing">
-                      <TimePicker
-                        label="Opening Bid Time"
-                        value={openTime}
-                        onChange={(newValue) => setOpenTime(newValue)}
-                      />
-                    </DemoItem>
-                    <DemoItem label="Date of Submission">
-                      <TimePicker
-                        label="Closing Bid Time"
-                        value={closeTime}
-                        onChange={(newValue) => setCloseTime(newValue)}
-                      />
-                    </DemoItem>
-                  </LocalizationProvider>
-                </Box>
+                data?.bid_times == null && (
+                  <Box>
+                    <Typography variant="h6">
+                      The System were not able to detect Opening and closing bid
+                      times Please Enter times below,
+                    </Typography>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoItem label="Date of Publishing">
+                        <TimePicker
+                          label="Opening Bid Time"
+                          value={openTime}
+                          onChange={(newValue) => setOpenTime(newValue)}
+                        />
+                      </DemoItem>
+                      <DemoItem label="Date of Submission">
+                        <TimePicker
+                          label="Closing Bid Time"
+                          value={closeTime}
+                          onChange={(newValue) => setCloseTime(newValue)}
+                        />
+                      </DemoItem>
+                    </LocalizationProvider>
+                  </Box>
+                )
               )}
-            </ListItem> */}
+
+              {/* //   <Typography
+              //     variant="subtitle1"
+              //     sx={{ backgroundColor: green[200] }}
+              //   >
+              //     The Time difference  {timeDiff} is greater than 30 min minutes
+              //     difference which, is in accordance with this
+              //   </Typography>
+              // )} */}
+            </ListItem>
           </List>
         </AccordionDetails>
       </Accordion>
