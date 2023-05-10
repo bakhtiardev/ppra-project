@@ -499,6 +499,12 @@ export default function PpraAccordian(props: { data: any }) {
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
+          sx={{
+            backgroundColor: data?.contract_amount ? green[400] : red[400],
+            justifyContent: "space-between",
+            alignItems: "center",
+            color: "white",
+          }}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
@@ -507,9 +513,7 @@ export default function PpraAccordian(props: { data: any }) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            If needed, it shall not exceed 10% of Contract amount.
-          </Typography>
+        
         </AccordionDetails>
       </Accordion>
     </>
