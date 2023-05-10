@@ -15,7 +15,7 @@ def getTwoPercent(file):
     pattern1 = [
         # {"LIKE_NUM": True, "LENGTH": 1, "OP": "+"},
         {"ORTH": "2"},
-        {"IS_PUNCT": True, "OP": "?"},
+        {"ORTH": "%", "OP": "+", },
     ]
     pattern2 = [
         # {"LIKE_NUM": True, "LENGTH": 1, "OP": "+"},

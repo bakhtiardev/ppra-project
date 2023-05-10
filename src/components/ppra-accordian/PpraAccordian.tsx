@@ -24,7 +24,8 @@ dayjs.extend(customParseFormat);
 export default function PpraAccordian(props: { data: any }) {
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const { data } = props;
-  let { contract_amount, brand_name, web_links, bid_times } = data ?? {};
+  let { contract_amount, brand_name, web_links, bid_times, two_percent } =
+    data ?? {};
 
   const [contractAmount, setContractAmount] = React.useState(
     data?.contract_amount
@@ -41,20 +42,18 @@ export default function PpraAccordian(props: { data: any }) {
         String(timestr).substring(0, 2) + ":" + String(timestr).substring(2)
       );
   }
+
   console.log(
     "Time diff",
     convertTo12Time(bid_times[0]),
     convertTo12Time(bid_times[1])
   );
-  const timeCalc = (opentime, closeTime) => {};
-  console.log(
-    "Time Diff2",
-    timeCalc(convertTo12Time(bid_times[1]), convertTo12Time(bid_times[0]))
-  );
+  // const timeCalc = (opentime, closeTime) => {};
+  console.log(data);
 
   // const minuteDiff = timeCalc(openTime, closeTime);
   // console.log("Min Diff", minuteDiff);
-  console.log(openTime, closeTime);
+  // console.log(openTime, closeTime);
   let hours = dateClose.diff(dateOpen, "hours");
   const daysDiff = Math.floor(hours / 24);
 
@@ -72,7 +71,7 @@ export default function PpraAccordian(props: { data: any }) {
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           sx={{
-            backgroundColor: data?.contract_amount ? green[400] : red[400],
+            backgroundColor: contractAmount > 10000000 ? green[400] : red[400],
             justifyContent: "space-between",
             alignItems: "center",
             color: "white",
@@ -111,8 +110,9 @@ export default function PpraAccordian(props: { data: any }) {
                       variant="subtitle1"
                       sx={{ backgroundColor: red[200] }}
                     >
-                      This project must have integrity pact check otherwise it
-                      will violate the ppra regulations
+                      As entered amount is less than 10 million, This project
+                      must have integrity pact check otherwise it will violate
+                      the ppra regulations
                     </Typography>
                   )}
                 </Box>
@@ -123,10 +123,10 @@ export default function PpraAccordian(props: { data: any }) {
                     Please enter contract amount
                   </Typography>
                   <TextField
-                    id="contractAmount"
-                    label="Contract Amount"
+                    defaultValue={""}
                     type="number"
-                    value={""}
+                    label="Contract Amount"
+                    placeholder="Enter Number"
                     onChange={(e) => setContractAmount(e.target.value)}
                     margin="dense"
                     variant="outlined"
@@ -209,8 +209,8 @@ export default function PpraAccordian(props: { data: any }) {
           id="panel3bh-header"
           sx={{
             backgroundColor:
-              data?.contract_amount >= 500000 &&
-              data?.contract_amount <= 3000000 &&
+              contractAmount >= 500000 &&
+              contractAmount <= 3000000 &&
               data?.web_links
                 ? green[400]
                 : red[400],
@@ -241,8 +241,8 @@ export default function PpraAccordian(props: { data: any }) {
               </Typography>
             </ListItem>
             <ListItem>
-              {data?.contract_amount >= 500000 &&
-              data?.contract_amount <= 3000000 &&
+              {contractAmount >= 500000 &&
+              contractAmount <= 3000000 &&
               data?.web_links ? (
                 <Box>
                   <Typography variant="h6">
@@ -264,8 +264,8 @@ export default function PpraAccordian(props: { data: any }) {
               ) : (
                 <Box>
                   <Typography variant="h6">
-                    This Project is NOT under range from 500,000/Rs and
-                    3000000/Rs
+                    This Project is NOT under range from 500,000/rs and
+                    3000000/rs
                   </Typography>
 
                   {data?.web_links.length > 0 ? (
@@ -370,7 +370,7 @@ export default function PpraAccordian(props: { data: any }) {
           id="panel1bh-header"
           sx={{
             backgroundColor:
-              data?.two_precent || contractAmount >= 15 ? green[400] : red[400],
+              data?.two_percent || contractAmount ? green[400] : red[400],
             justifyContent: "space-between",
             alignItems: "center",
             color: "white",
@@ -390,21 +390,21 @@ export default function PpraAccordian(props: { data: any }) {
             </ListItem>
 
             <ListItem>
-              {contractAmount ? (
-                <Typography
-                  variant="subtitle1"
-                  sx={{ backgroundColor: green[200] }}
-                >
-                  The Bid Security must in range from 2% to 5% of Contract
-                  Amount which {contractAmount * 0.02} and{" "}
-                  {contractAmount * 0.05} respectively
-                </Typography>
-              ) : data?.two_percent ? (
+              {data?.two_percent ? (
                 <Typography
                   variant="subtitle1"
                   sx={{ backgroundColor: green[200] }}
                 >
                   The System detected, document mentions bid security of 2%
+                </Typography>
+              ) : contractAmount ? (
+                <Typography
+                  variant="subtitle1"
+                  sx={{ backgroundColor: green[200] }}
+                >
+                  The Bid Security must in range from 2% to 5% of Contract
+                  Amount which {contractAmount * 0.02}/rs and{" "}
+                  {contractAmount * 0.05}/rs respectively
                 </Typography>
               ) : (
                 <Typography
@@ -500,7 +500,7 @@ export default function PpraAccordian(props: { data: any }) {
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           sx={{
-            backgroundColor: data?.contract_amount ? green[400] : red[400],
+            backgroundColor: contractAmount ? green[400] : red[400],
             justifyContent: "space-between",
             alignItems: "center",
             color: "white",
@@ -520,30 +520,35 @@ export default function PpraAccordian(props: { data: any }) {
               </Typography>
             </ListItem>
             <ListItem>
-              {data.contract_amount ? (
-                <Box>
-                  <Typography variant="h6">
-                    System detected Contract Amount = {data.contract_amount}
-                  </Typography>
-                  {contractAmount > 10000000 ? (
+              <Box>
+                {contractAmount ? (
+                  <>
+                    <Typography variant="body">
+                      System detected Contract Amount = {contractAmount}
+                      /rs and Performance Security of 10% is equals to{" "}
+                      {contractAmount * 0.1}/rs
+                    </Typography>
+
                     <Typography
                       variant="subtitle1"
                       sx={{ backgroundColor: green[200] }}
                     >
-                      This Project is accordance with the integrity pact check,
-                      as the amount is not greater than 10 million
+                      As per PPRA rules the Performance Security shall not
+                      exceeed {contractAmount * 0.1}/rs amount
                     </Typography>
-                  ) : (
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ backgroundColor: red[200] }}
-                    >
-                      This project must have integrity pact check otherwise it
-                      will violate the ppra regulations
-                    </Typography>
-                  )}
-                </Box>
-              ) : (
+                  </>
+                ) : (
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ backgroundColor: red[200] }}
+                  >
+                    This project has faild Performance Security Check, as per
+                    PPRA Rules
+                  </Typography>
+                )}
+              </Box>
+
+              {/* : (
                 <Box>
                   <Typography variant="h6">
                     System unable to find Contract Amount or Any term similar,
@@ -559,7 +564,7 @@ export default function PpraAccordian(props: { data: any }) {
                     variant="outlined"
                   />
                 </Box>
-              )}
+              )} */}
             </ListItem>
           </List>
         </AccordionDetails>
