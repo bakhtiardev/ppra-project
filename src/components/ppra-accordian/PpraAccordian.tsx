@@ -513,7 +513,55 @@ export default function PpraAccordian(props: { data: any }) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-        
+          <List aria-label="contacts">
+            <ListItem>
+              <Typography>
+                If needed, it shall not exceed 10% of Contract amount
+              </Typography>
+            </ListItem>
+            <ListItem>
+              {data.contract_amount ? (
+                <Box>
+                  <Typography variant="h6">
+                    System detected Contract Amount = {data.contract_amount}
+                  </Typography>
+                  {contractAmount > 10000000 ? (
+                    <Typography
+                      variant="subtitle1"
+                      sx={{ backgroundColor: green[200] }}
+                    >
+                      This Project is accordance with the integrity pact check,
+                      as the amount is not greater than 10 million
+                    </Typography>
+                  ) : (
+                    <Typography
+                      variant="subtitle1"
+                      sx={{ backgroundColor: red[200] }}
+                    >
+                      This project must have integrity pact check otherwise it
+                      will violate the ppra regulations
+                    </Typography>
+                  )}
+                </Box>
+              ) : (
+                <Box>
+                  <Typography variant="h6">
+                    System unable to find Contract Amount or Any term similar,
+                    Please enter contract amount
+                  </Typography>
+                  <TextField
+                    id="contractAmount"
+                    label="Contract Amount"
+                    type="number"
+                    value={""}
+                    onChange={(e) => setContractAmount(e.target.value)}
+                    margin="dense"
+                    variant="outlined"
+                  />
+                </Box>
+              )}
+            </ListItem>
+          </List>
         </AccordionDetails>
       </Accordion>
     </>
