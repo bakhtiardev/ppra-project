@@ -123,7 +123,7 @@ function Appbar(props: { open: boolean; toggleDrawer: any }) {
             textDecoration: "none",
           }}
         >
-          PPRA Monitor
+          PPRA Compliance Companion
         </Typography>
         {/* <Typography
           component="h1"

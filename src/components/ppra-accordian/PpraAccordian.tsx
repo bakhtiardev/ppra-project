@@ -51,7 +51,7 @@ export default function PpraAccordian(props: { data: any }) {
 
     return minDiff;
   }
-  console.log("time1", openTime, "time2", closeTime);
+  // console.log("time1", openTime, "time2", closeTime);
   function convertTo12Time(timestr: any): any {
     if (timestr !== null)
       return (
@@ -282,16 +282,19 @@ export default function PpraAccordian(props: { data: any }) {
                     3000000/rs
                   </Typography>
 
-                  {data?.web_links.length > 0 ? (
+                  {data?.web_links?.length > 0 ? (
                     <>
                       <Typography variant="h6">
                         System detected Website following websites
                       </Typography>
-                      {data?.web_links?.map((item: any) => (
-                        <>
-                          <Link href={item}>{item} </Link> <Divider />
-                        </>
-                      ))}
+                      {web_links &&
+                        web_links?.map((item: any) => {
+                          return (
+                            <>
+                              <Link href={item}>{item} </Link> <Divider />
+                            </>
+                          );
+                        })}
                     </>
                   ) : (
                     <Typography>System detected No web links</Typography>
@@ -325,7 +328,7 @@ export default function PpraAccordian(props: { data: any }) {
           }}
         >
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
-            Rule 13 : Responce Time
+            Rule 13 : Response Time
           </Typography>
         </AccordionSummary>
         <AccordionDetails>

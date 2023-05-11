@@ -25,7 +25,7 @@ def getWebsiteLinks(file):
     websites = list(set(websites))
     if (len(websites) > 0):
         if (len(websites) == 1):
-            return websites[0]
+            return websites
         else:
             return websites
     return None

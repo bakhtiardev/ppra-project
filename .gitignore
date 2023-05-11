@@ -15,9 +15,9 @@ dist-ssr
 .venv
 /server/venv
 /venv
-
+*.pyc
 /__pycache__
-/server/__pycache__
+./server/__pycache__
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
