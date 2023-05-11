@@ -22,7 +22,7 @@ const Dropzone = (props: { setFile: any }) => {
       showPreviewsInDropzone={false}
       useChipsForPreview
       previewText="Selected files"
-      acceptedFiles={["application/pdf/*"]}
+      acceptedFiles={[".pdf"]}
       dropzoneText={"Drag and drop pdf file here or click"}
       onChange={(files) => setFile(files[0])}
     />
