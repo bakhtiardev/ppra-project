@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   FacebookAuthProvider,
+  fetchSignInMethodsForEmail,
 } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
@@ -77,30 +78,65 @@ const Signin = () => {
     );
   };
   const signInWithEmailPassword = async (email, password) => {
-    // const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
-      let createRes = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log("create User", createRes);
-    }
-    console.log("User signed in", getAuth().currentUser);
-    // const user = getAuth().currentUser;
-    // console.log("PhotoURL", user);
-    // dispatch(
-    //   addUser({
-    //     name: user?.displayName,
-    //     email: user?.email,
-    //     isLogin: true,
-    //     photoURL: user?.photoURL,
-    //   })
-    // );
+    signInWithEmailAndPassword(getAuth(), email, password)
+      .then((res) => {
+        dispatch(
+          addUser({
+            name: email.split("@")[0],
+            email: email,
+            isLogin: true,
+            photoURL: null,
+          })
+        );
+        console.log("Login Successful");
+      })
+      .catch(function (error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+
+        // User not found? Create user.
+        if (errorCode === "auth/user-not-found") {
+          createUserWithEmailAndPassword(getAuth(), email, password)
+            .then((res) => {
+              dispatch(
+                addUser({
+                  name: email.split("@")[0],
+                  email: email,
+                  isLogin: true,
+                  photoURL: null,
+                })
+              );
+              console.log("Login Successful");
+            })
+            .catch(function (error) {
+              // Handle Errors here.
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              if (errorCode == "email-already-in-use") {
+                alert("You already have an account with that email.");
+              } else if (errorCode == "auth/invalid-email") {
+                alert("Please provide a valid email");
+              } else if (errorCode == "auth/weak-password") {
+                alert("The password is too weak.");
+              } else {
+                alert(errorMessage);
+              }
+              console.log(error);
+            });
+          // Wrong Password Error
+        } else if (errorCode === "auth/wrong-password") {
+          // Check if User has signed up with a OAuthProvider
+
+          fetchSignInMethodsForEmail(getAuth(), email).then(function (result) {
+            if (result.length == 0)
+              alert("Please Sign In Using Google Account");
+            else alert("Wrong password. Please try again");
+          });
+        } else {
+          alert(errorMessage);
+        }
+        console.log(error);
+      });
   };
   const [rememberMe, setRememberMe] = React.useState(false);
 
@@ -114,7 +150,7 @@ const Signin = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       const res = signInWithEmailPassword(
         formik.values.email,
         formik.values.password

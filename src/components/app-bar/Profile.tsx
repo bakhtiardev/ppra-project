@@ -76,7 +76,7 @@ const Profile = (props: { open: boolean }) => {
 
   //   },[profileOption])
   const photoURL = user?.photoURL;
-  
+
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
@@ -88,10 +88,7 @@ const Profile = (props: { open: boolean }) => {
           > */}
           <Avatar
             alt="profile user"
-            src={
-              photoURL ||
-              "https://api.adorable.io/avatars/23/abott@adorable.png"
-            }
+            src={photoURL}
             sx={{ width: 32, height: 32 }}
           />
           {/* </StyledBadge> */}
