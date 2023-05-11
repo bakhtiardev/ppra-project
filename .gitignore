@@ -15,7 +15,13 @@ dist-ssr
 .venv
 /server/venv
 /venv
+
+server/__pycache__/
+*.py[cod]
+
 *.pyc
+server/__pycache__
+
 /__pycache__
 ./server/__pycache__
 # Editor directories and files
@@ -25,6 +31,8 @@ dist-ssr
 .DS_Store
 *.suo
 *.ntvs*
+*.py[cod]*
+*.pyc
 *.njsproj
 *.sln
 *.sw?

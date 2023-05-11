@@ -33,8 +33,8 @@ export default function PpraAccordian(props: { data: any }) {
   const [dateOpen, setDateOpen] = React.useState<Dayjs | null>(dayjs());
   const [dateClose, setDateClose] = React.useState<Dayjs | null>(dayjs());
 
-  const [openTime, setOpenTime] = React.useState<Dayjs | null>(dayjs());
-  const [closeTime, setCloseTime] = React.useState<Dayjs | null>(dayjs());
+  const [openTime, setOpenTime] = React.useState<Dayjs | null>();
+  const [closeTime, setCloseTime] = React.useState<Dayjs | null>();
 
   // console.log("Time diff", bid_times[0], bid_times[1]);
   // const timeCalc = (opentime, closeTime) => {};
@@ -51,6 +51,15 @@ export default function PpraAccordian(props: { data: any }) {
 
     return minDiff;
   }
+  function findTimeDiffMui(time1, time2) {
+    if (time1 && time2) {
+      var start = dayjs(time1);
+      var end = dayjs(time2);
+      // console.log(end.diff(start, "minutes") + " minutes");
+      return end.diff(start, "minutes");
+    }
+    return null;
+  }
   // console.log("time1", openTime, "time2", closeTime);
   function convertTo12Time(timestr: any): any {
     if (timestr !== null)
@@ -62,6 +71,8 @@ export default function PpraAccordian(props: { data: any }) {
   let timeDiff = null;
   console.log(data);
   if (data?.bid_times) timeDiff = findTimeDiff(bid_times[0], bid_times[1]);
+
+  const minuteDiff = findTimeDiffMui(openTime, closeTime);
 
   // const minuteDiff = timeCalc(openTime, closeTime);
   // console.log("Min Diff", minuteDiff);
@@ -491,39 +502,69 @@ export default function PpraAccordian(props: { data: any }) {
                 </Typography>
               ) : (
                 data?.bid_times == null && (
-                  <Box>
-                    <Typography variant="h6">
-                      The System were not able to detect Opening and closing bid
-                      times Please Enter times below,
-                    </Typography>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoItem label="Date of Publishing">
-                        <TimePicker
-                          label="Opening Bid Time"
-                          value={openTime}
-                          onChange={(newValue) => setOpenTime(newValue)}
-                        />
-                      </DemoItem>
-                      <DemoItem label="Date of Submission">
-                        <TimePicker
-                          label="Closing Bid Time"
-                          value={closeTime}
-                          onChange={(newValue) => setCloseTime(newValue)}
-                        />
-                      </DemoItem>
-                    </LocalizationProvider>
-                  </Box>
+                  <>
+                    <Box>
+                      <Typography variant="h6">
+                        The System were not able to detect Opening and closing
+                        bid times Please Enter times below,
+                      </Typography>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer
+                          components={["TimePicker", "TimePicker"]}
+                        >
+                          <DemoItem label="Date of Publishing">
+                            <TimePicker
+                              label="Opening Bid Time"
+                              value={openTime}
+                              onChange={(newValue) => setOpenTime(newValue)}
+                            />
+                          </DemoItem>
+                          <DemoItem label="Date of Submission">
+                            <TimePicker
+                              label="Closing Bid Time"
+                              value={closeTime}
+                              onChange={(newValue) => setCloseTime(newValue)}
+                            />
+                          </DemoItem>
+                        </DemoContainer>
+                      </LocalizationProvider>
+                      <Box mt={2}>
+                        {minuteDiff == null ? (
+                          <Typography
+                            variant="subtitle1"
+                            sx={{ backgroundColor: red[400] }}
+                          >
+                            Enter Both Times!
+                          </Typography>
+                        ) : minuteDiff >= 30 ? (
+                          <Typography
+                            variant="subtitle1"
+                            sx={{ backgroundColor: green[200] }}
+                          >
+                            The System detected, Bid Opening time{" "}
+                            {openTime?.format("LT")} and Closing Bid Time{" "}
+                            {closeTime?.format("LT")} with {minuteDiff} minutes
+                            difference which, satisfies Rule 28
+                          </Typography>
+                        ) : (
+                          minuteDiff != 0 && (
+                            <Typography
+                              variant="subtitle1"
+                              sx={{ backgroundColor: red[200] }}
+                            >
+                              Bid Opening time {openTime?.format("LT")} and
+                              Closing Bid Time {closeTime?.format("LT")} with{" "}
+                              {minuteDiff} minutes difference which, which is
+                              Less than 30 minutes, Hence this project fails
+                              this rule.
+                            </Typography>
+                          )
+                        )}
+                      </Box>
+                    </Box>
+                  </>
                 )
               )}
-
-              {/* //   <Typography
-              //     variant="subtitle1"
-              //     sx={{ backgroundColor: green[200] }}
-              //   >
-              //     The Time difference  {timeDiff} is greater than 30 min minutes
-              //     difference which, is in accordance with this
-              //   </Typography>
-              // )} */}
             </ListItem>
           </List>
         </AccordionDetails>
