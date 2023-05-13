@@ -463,10 +463,9 @@ export default function PpraAccordian({ data }: { data: any }) {
                   sx={{ backgroundColor: green[200] }}
                 >
                   The system has detected that the bid opening time is at{" "}
-                  {convertTo12Time(bid_times[1])}
-                  and the closing bid time is at {convertTo12Time(bid_times[0])}
-                  , with a {timeDiff}-minute difference between them. This
-                  satisfies Rule 28.
+                  {convertTo12Time(bid_times[1])} and the closing bid time is at{" "}
+                  {convertTo12Time(bid_times[0])}, with a {timeDiff}-minute
+                  difference between them. This satisfies Rule 28.
                 </Typography>
               ) : timeDiff < 30 && bid_times ? (
                 <Typography
@@ -474,10 +473,9 @@ export default function PpraAccordian({ data }: { data: any }) {
                   sx={{ backgroundColor: red[200] }}
                 >
                   The system has detected that the bid opening time is at{" "}
-                  {convertTo12Time(bid_times[1])}
-                  and the closing bid time is at {convertTo12Time(bid_times[0])}
-                  , with a {timeDiff}-minute difference between them. This fails
-                  this Rule 28.
+                  {convertTo12Time(bid_times[1])} and the closing bid time is at{" "}
+                  {convertTo12Time(bid_times[0])}, with a {timeDiff}-minute
+                  difference between them. This fails this Rule 28.
                 </Typography>
               ) : (
                 data?.bid_times == null && (
