@@ -6,8 +6,10 @@ const AdvertInRange = ({ web_links }: { web_links: any }) => {
   return (
     <Box>
       <Typography variant="h6">
-        As Project is under range from 500,000 and 3000000 System detected
-        Website following websites
+        The system has identified that the project value falls between 500,000
+        and 3,000,000, and accordingly, the following websites are being
+        monitored. Hence as per Rules, the projects comply with the rules of
+        PPRA.
       </Typography>
       {web_links?.map((item: any) => (
         <>

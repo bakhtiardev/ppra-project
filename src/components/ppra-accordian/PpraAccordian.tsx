@@ -128,16 +128,16 @@ export default function PpraAccordian({ data }: { data: any }) {
         <AccordionDetails>
           <List aria-label="contacts">
             <ListItem>
-              <Typography>
-                Procurements exceeding the prescribed limit shall be subject to
-                an integrity pact
+              <Typography sx={{ fontWeight: "bold", m: 1 }}>
+                Procurements exceeding the prescribed limit shall be subjected
+                to an integrity pact
               </Typography>
             </ListItem>
             <ListItem>
               {data.contract_amount ? (
                 <Box>
                   <Typography variant="h6">
-                    System detected Contract Amount = {data.contract_amount}
+                    Contract amount detected = {data.contract_amount}
                   </Typography>
                 </Box>
               ) : (
@@ -164,17 +164,16 @@ export default function PpraAccordian({ data }: { data: any }) {
                   variant="subtitle1"
                   sx={{ backgroundColor: green[200] }}
                 >
-                  This project needs an integrity pact check as per PPRA Rules,
-                  as the amount is greater than 10 million
+                  Projects exceeding 10 million require an integrity pact check
+                  according to PPRA Rules.
                 </Typography>
               ) : (
                 <Typography
                   variant="subtitle1"
                   sx={{ backgroundColor: red[200] }}
                 >
-                  As entered amount is less than 10 million, This project does
-                  not needs an integrity pact check as per PPRA Rules, as the
-                  contract amount is less than 10 million
+                  As the entered amount is below 10 million, the project is
+                  exempt from an integrity pact check under PPRA Rules.
                 </Typography>
               )}
             </ListItem>
@@ -203,12 +202,13 @@ export default function PpraAccordian({ data }: { data: any }) {
         <AccordionDetails>
           <List aria-label="contacts">
             <ListItem>
-              <Typography>
-                Any terms, specifications, standards, features, characteristics
-                and requirements prescribing the technical or quality
-                characteristics shall be generic in nature and shall not include
-                reference to brand name, model number, catalogue number, name or
-                origin of the country or similar classification.
+              <Typography sx={{ fontWeight: "bold", m: 1 }}>
+                As per PPRA Rules, any technical or quality characteristics
+                specified in terms, specifications, standards, features,
+                characteristics and requirements must be generic in nature and
+                should not include any reference to brand names, model numbers,
+                catalogue numbers, countries of origin, or similar
+                classifications.
               </Typography>
             </ListItem>
             <ListItem>
@@ -221,21 +221,21 @@ export default function PpraAccordian({ data }: { data: any }) {
                     variant="subtitle1"
                     sx={{ backgroundColor: red[200] }}
                   >
-                    This Project is against the specification rule, it should
-                    not have contain any brand name
+                    The system has identified the use of a brand name{" "}
+                    {data.brand_name} in the bid advertisement, which is in
+                    violation of PPRA Rules.
                   </Typography>
                 </Box>
               ) : (
                 <Box>
-                  <Typography variant="h6">
-                    System detected No Brand Name
-                  </Typography>
+                  <Typography variant="h6">No brand name was found.</Typography>
                   <Typography
                     variant="subtitle1"
                     sx={{ backgroundColor: green[200] }}
                   >
-                    This Project follows the specification rule, it does not
-                    contain any brand name
+                    In accordance with PPRA Rules, the project strictly adheres
+                    to the specification rule, which prohibits the use of brand
+                    names in technical specifications.
                   </Typography>
                 </Box>
               )}
@@ -270,7 +270,7 @@ export default function PpraAccordian({ data }: { data: any }) {
         <AccordionDetails>
           <List aria-label="contacts">
             <ListItem>
-              <Typography>
+              <Typography sx={{ fontWeight: "bold", m: 1 }}>
                 Procurements over five hundred thousand Pakistani Rupees and up
                 to the limit of three million Pakistani Rupees shall be
                 advertised on the Authority’s website in the manner and format
@@ -278,7 +278,7 @@ export default function PpraAccordian({ data }: { data: any }) {
               </Typography>
             </ListItem>
             <ListItem>
-              <Typography>
+              <Typography sx={{ fontWeight: "bold", m: 1 }}>
                 All procurement opportunities over three million Pakistani
                 Rupees should be advertised on the Authority’s website as well
                 as in other print media or newspapers having wide circulation.
@@ -320,7 +320,7 @@ export default function PpraAccordian({ data }: { data: any }) {
         <AccordionDetails>
           <List aria-label="contacts">
             <ListItem>
-              <Typography>
+              <Typography sx={{ fontWeight: "bold", m: 1 }}>
                 The procuring agency may decide the response time but not in any
                 case it can be less than 15 days for national competitive
                 bidding and no less than 30 days international bidding
@@ -348,15 +348,15 @@ export default function PpraAccordian({ data }: { data: any }) {
                   variant="subtitle1"
                   sx={{ backgroundColor: green[200] }}
                 >
-                  This Project satisfies atleast 15 days difference check, In
-                  the date of publishing and date of submission
+                  This Project satisfies atleast 15 days difference check,
+                  betweeen the date of publishing and the date of submission
                 </Typography>
               ) : (
                 <Typography
                   variant="subtitle1"
                   sx={{ backgroundColor: red[200] }}
                 >
-                  This Project fails Responce Time Check
+                  The project fails response time checks
                 </Typography>
               )}
             </ListItem>
@@ -386,9 +386,10 @@ export default function PpraAccordian({ data }: { data: any }) {
         <AccordionDetails>
           <List aria-label="contacts">
             <ListItem>
-              <Typography>
-                The Bid Security must be generally, 2 to 5 %. We will consider
-                2%.
+              <Typography sx={{ fontWeight: "bold", m: 1 }}>
+                As per PPRA rules, bid security is generally expected to be in
+                the range of 2 to 5%. However, for this specific project, we
+                will consider a bid security of 2% as per our evaluation.
               </Typography>
             </ListItem>
 
@@ -398,7 +399,8 @@ export default function PpraAccordian({ data }: { data: any }) {
                   variant="subtitle1"
                   sx={{ backgroundColor: green[200] }}
                 >
-                  The System detected, document mentions bid security of 2%
+                  The system has detected that the bid security of 2% is
+                  mentioned in the document.
                 </Typography>
               ) : contractAmount ? (
                 <Typography
@@ -447,7 +449,7 @@ export default function PpraAccordian({ data }: { data: any }) {
         <AccordionDetails>
           <List aria-label="contacts">
             <ListItem>
-              <Typography>
+              <Typography sx={{ fontWeight: "bold", m: 1 }}>
                 The date for opening of bids and the last date for the
                 submission of bids shall be the same. The bids shall be opened
                 at least thirty minutes after the deadline for submission of
@@ -460,21 +462,22 @@ export default function PpraAccordian({ data }: { data: any }) {
                   variant="subtitle1"
                   sx={{ backgroundColor: green[200] }}
                 >
-                  The System detected, Bid Opening time{" "}
-                  {convertTo12Time(bid_times[1])} and Closing Bid Time{" "}
-                  {convertTo12Time(bid_times[0])} with {timeDiff} minutes
-                  difference which, satisfies Rule 28
+                  The system has detected that the bid opening time is at{" "}
+                  {convertTo12Time(bid_times[1])}
+                  and the closing bid time is at {convertTo12Time(bid_times[0])}
+                  , with a {timeDiff}-minute difference between them. This
+                  satisfies Rule 28.
                 </Typography>
               ) : timeDiff < 30 && bid_times ? (
                 <Typography
                   variant="subtitle1"
                   sx={{ backgroundColor: red[200] }}
                 >
-                  The System detected, Bid Opening time{" "}
-                  {convertTo12Time(bid_times[1])} and Closing Bid Time{" "}
-                  {convertTo12Time(bid_times[0])} with {timeDiff} minutes
-                  difference which, which is Less than 30 minutes, Hence this
-                  project fails this rule.
+                  The system has detected that the bid opening time is at{" "}
+                  {convertTo12Time(bid_times[1])}
+                  and the closing bid time is at {convertTo12Time(bid_times[0])}
+                  , with a {timeDiff}-minute difference between them. This fails
+                  this Rule 28.
                 </Typography>
               ) : (
                 data?.bid_times == null && (
@@ -517,10 +520,13 @@ export default function PpraAccordian({ data }: { data: any }) {
                             variant="subtitle1"
                             sx={{ backgroundColor: green[200] }}
                           >
-                            The System detected, Bid Opening time{" "}
-                            {openTime?.format("LT")} and Closing Bid Time{" "}
-                            {closeTime?.format("LT")} with {minuteDiff} minutes
-                            difference which, satisfies Rule 28
+                            The System has detected that the bid opening time is
+                            at
+                            {openTime?.format("LT")} and the closing bid time is
+                            at
+                            {closeTime?.format("LT")}, with a {minuteDiff}
+                            -minutes difference between them. This satisfies
+                            Rule 28
                           </Typography>
                         ) : (
                           minuteDiff != 0 && (
@@ -528,11 +534,13 @@ export default function PpraAccordian({ data }: { data: any }) {
                               variant="subtitle1"
                               sx={{ backgroundColor: red[200] }}
                             >
-                              Bid Opening time {openTime?.format("LT")} and
-                              Closing Bid Time {closeTime?.format("LT")} with{" "}
-                              {minuteDiff} minutes difference which, which is
-                              Less than 30 minutes, Hence this project fails
-                              this rule.
+                              The System has detected that the bid opening time
+                              is at
+                              {openTime?.format("LT")} and the closing bid time
+                              is at
+                              {closeTime?.format("LT")}, with a {minuteDiff}
+                              -minutes difference between them. This fails Rule
+                              28
                             </Typography>
                           )
                         )}
@@ -567,7 +575,7 @@ export default function PpraAccordian({ data }: { data: any }) {
         <AccordionDetails>
           <List aria-label="contacts">
             <ListItem>
-              <Typography>
+              <Typography sx={{ fontWeight: "bold", m: 1 }}>
                 If needed, it shall not exceed 10% of Contract amount
               </Typography>
             </ListItem>
@@ -586,7 +594,7 @@ export default function PpraAccordian({ data }: { data: any }) {
                       sx={{ backgroundColor: green[200] }}
                     >
                       As per PPRA rules the Performance Security shall not
-                      exceeed {contractAmount * 0.1}/rs amount
+                      exceed {contractAmount * 0.1} Rs amount
                     </Typography>
                   </>
                 ) : (
@@ -594,8 +602,8 @@ export default function PpraAccordian({ data }: { data: any }) {
                     variant="subtitle1"
                     sx={{ backgroundColor: red[200] }}
                   >
-                    This project has faild Performance Security Check, as per
-                    PPRA Rules
+                    According to PPRA rules, this project has failed the
+                    performance security check.
                   </Typography>
                 )}
               </Box>

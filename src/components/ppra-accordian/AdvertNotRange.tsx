@@ -6,7 +6,9 @@ const AdvertNotRange = ({ web_links }: { web_links: any }) => {
   return (
     <Box>
       <Typography variant="h6">
-        This Project is NOT under range from 500,000/rs and 3000000/rs
+        The system has identified that the project value falls below 500,000
+        .Hence as per Rules, the projects does not comply with the rules of
+        PPRA.
       </Typography>
 
       {web_links?.length > 0 ? (

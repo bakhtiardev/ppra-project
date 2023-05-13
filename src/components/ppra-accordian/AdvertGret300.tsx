@@ -6,8 +6,9 @@ const AdvertGret300 = ({ web_links }: { web_links: any }) => {
   return (
     <Box>
       <Typography variant="h6">
-        As Project is greater than 300,0000 System, Hence it must be published
-        on newsapapers.
+        As per PPRA rules, a project with a value exceeding 300,0000 must be
+        advertised in a recognized newspaper. The system has detected that this
+        requirement applies to the current project.
       </Typography>
 
       {web_links?.length > 0 ? (
