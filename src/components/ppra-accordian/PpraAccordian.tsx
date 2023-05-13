@@ -433,7 +433,8 @@ export default function PpraAccordian({ data }: { data: any }) {
           aria-controls="panel1bh-content"
           id="panel1bh-header"
           sx={{
-            backgroundColor: data?.bid_times ? green[400] : red[400],
+            backgroundColor:
+              timeDiff >= 30 || minuteDiff >= 30 ? green[400] : red[400],
             justifyContent: "space-between",
             alignItems: "center",
             color: "white",
