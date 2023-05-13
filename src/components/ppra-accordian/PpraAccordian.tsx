@@ -28,7 +28,7 @@ export default function PpraAccordian(props: { data: any }) {
     data ?? {};
 
   const [contractAmount, setContractAmount] = React.useState(
-    data?.contract_amount
+    parseInt(data?.contract_amount)
   );
   const [dateOpen, setDateOpen] = React.useState<Dayjs | null>(dayjs());
   const [dateClose, setDateClose] = React.useState<Dayjs | null>(dayjs());
@@ -235,7 +235,7 @@ export default function PpraAccordian(props: { data: any }) {
           sx={{
             backgroundColor:
               contractAmount >= 500000 &&
-              contractAmount <= 3000000 &&
+              // contractAmount <= 3000000 &&
               data?.web_links
                 ? green[400]
                 : red[400],
@@ -266,8 +266,8 @@ export default function PpraAccordian(props: { data: any }) {
               </Typography>
             </ListItem>
             <ListItem>
-              {contractAmount >= 500000 &&
-              contractAmount <= 3000000 &&
+              {parseInt(contractAmount) >= 500000 &&
+              parseInt(contractAmount) <= 3000000 &&
               data?.web_links ? (
                 <Box>
                   <Typography variant="h6">
@@ -286,6 +286,37 @@ export default function PpraAccordian(props: { data: any }) {
                     This Project passes Adverstisement Check
                   </Typography>
                 </Box>
+              ) : parseInt(contractAmount) > 3000000 ? (
+                <Box>
+                  <Typography variant="h6">
+                    As Project is greater than 300,0000 System, Hence it must be
+                    published on newsapapers.
+                  </Typography>
+
+                  {data?.web_links?.length > 0 ? (
+                    <>
+                      <Typography variant="h6">
+                        System detected following websites
+                      </Typography>
+                      {web_links &&
+                        web_links?.map((item: any) => {
+                          return (
+                            <>
+                              <Link href={item}>{item} </Link> <Divider />
+                            </>
+                          );
+                        })}
+                    </>
+                  ) : (
+                    <Typography>System detected No web links</Typography>
+                  )}
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ backgroundColor: green[200] }}
+                  >
+                    This Project passes Adverstisement Check
+                  </Typography>
+                </Box>
               ) : (
                 <Box>
                   <Typography variant="h6">
@@ -296,7 +327,7 @@ export default function PpraAccordian(props: { data: any }) {
                   {data?.web_links?.length > 0 ? (
                     <>
                       <Typography variant="h6">
-                        System detected Website following websites
+                        System detected following websites
                       </Typography>
                       {web_links &&
                         web_links?.map((item: any) => {
