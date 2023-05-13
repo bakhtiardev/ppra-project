@@ -19,15 +19,18 @@ import Link from "@mui/material/Link";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import AdvertInRange from "./AdvertInRange";
+import AdvertGret300 from "./AdvertGret300";
+import AdvertNotRange from "./AdvertNotRange";
 dayjs.extend(customParseFormat);
 
-export default function PpraAccordian(props: { data: any }) {
+export default function PpraAccordian({ data }: { data: any }) {
   const [expanded, setExpanded] = React.useState<string | false>(false);
-  const { data } = props;
+
   let { contract_amount, brand_name, web_links, bid_times, two_percent } =
     data ?? {};
 
-  const [contractAmount, setContractAmount] = React.useState(
+  const [contractAmount, setContractAmount] = React.useState<null | any>(
     parseInt(data?.contract_amount)
   );
   const [dateOpen, setDateOpen] = React.useState<Dayjs | null>(dayjs());
@@ -85,6 +88,22 @@ export default function PpraAccordian(props: { data: any }) {
       setExpanded(isExpanded ? panel : false);
     };
 
+  console.log(data?.contract_amount, contractAmount);
+  function renderAdvert(contract_amount) {
+    if (
+      parseInt(contract_amount) >= 500000 &&
+      parseInt(contract_amount) <= 3000000
+    ) {
+      return <AdvertInRange web_links={web_links} />;
+    } else if (parseInt(contract_amount) > 3000000) {
+      return <AdvertGret300 web_links={web_links} />;
+    }
+    return <AdvertNotRange web_links={web_links} />;
+  }
+
+  React.useEffect(() => {
+    setContractAmount(parseInt(data?.contract_amount));
+  }, [data?.contract_amount]);
   return (
     <>
       <Accordion
@@ -266,90 +285,15 @@ export default function PpraAccordian(props: { data: any }) {
               </Typography>
             </ListItem>
             <ListItem>
-              {parseInt(contractAmount) >= 500000 &&
-              parseInt(contractAmount) <= 3000000 &&
-              data?.web_links ? (
-                <Box>
-                  <Typography variant="h6">
-                    As Project is under range from 500,000 and 3000000 System
-                    detected Website following websites
-                  </Typography>
-                  {data?.web_links?.map((item: any) => (
-                    <>
-                      <Link href={item}>{item} </Link> <Divider />
-                    </>
-                  ))}
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ backgroundColor: green[200] }}
-                  >
-                    This Project passes Adverstisement Check
-                  </Typography>
-                </Box>
+              {renderAdvert(contractAmount)}
+              {/* {parseInt(contractAmount) >= 500000 &&
+              parseInt(contractAmount) <= 3000000 ? (
+                <AdvertInRange web_links={web_links}/>
               ) : parseInt(contractAmount) > 3000000 ? (
-                <Box>
-                  <Typography variant="h6">
-                    As Project is greater than 300,0000 System, Hence it must be
-                    published on newsapapers.
-                  </Typography>
-
-                  {data?.web_links?.length > 0 ? (
-                    <>
-                      <Typography variant="h6">
-                        System detected following websites
-                      </Typography>
-                      {web_links &&
-                        web_links?.map((item: any) => {
-                          return (
-                            <>
-                              <Link href={item}>{item} </Link> <Divider />
-                            </>
-                          );
-                        })}
-                    </>
-                  ) : (
-                    <Typography>System detected No web links</Typography>
-                  )}
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ backgroundColor: green[200] }}
-                  >
-                    This Project passes Adverstisement Check
-                  </Typography>
-                </Box>
+                  <AdvertGret300 web_links={web_links} />
               ) : (
-                <Box>
-                  <Typography variant="h6">
-                    This Project is NOT under range from 500,000/rs and
-                    3000000/rs
-                  </Typography>
-
-                  {data?.web_links?.length > 0 ? (
-                    <>
-                      <Typography variant="h6">
-                        System detected following websites
-                      </Typography>
-                      {web_links &&
-                        web_links?.map((item: any) => {
-                          return (
-                            <>
-                              <Link href={item}>{item} </Link> <Divider />
-                            </>
-                          );
-                        })}
-                    </>
-                  ) : (
-                    <Typography>System detected No web links</Typography>
-                  )}
-
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ backgroundColor: red[200] }}
-                  >
-                    This Project fails Adverstisement Check
-                  </Typography>
-                </Box>
-              )}
+                <AdvertNotRange web_links={web_links} />
+              )} */}
             </ListItem>
           </List>
         </AccordionDetails>
