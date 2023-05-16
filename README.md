@@ -1,4 +1,4 @@
-# ppra-project
+# ppra-project: PPRA Compliance Companion
 Welcome to the PPRA Compliance Companion, a powerful NLP-powered web application built with ReactJS+Vite (TypeScript). Our goal is to provide a user-friendly interface that allows clients to easily check the compliance of tender documents, particularly in PDF format, with just a few simple clicks.
 
 ## Objective and Problem Statement
