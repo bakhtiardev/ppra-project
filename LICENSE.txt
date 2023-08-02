@@ -1,0 +1,32 @@
+PPRA Compliance Companion Custom License
+
+Version 1.0, 30-4-2023
+
+This software, the PPRA Compliance Companion ("Software"/"Web App"), is provided by Bakhtiar Hussain ("Licensor") under the following terms:
+
+1. Copyright and Ownership:
+   The Software is copyrighted by Licensor. Licensor retains all rights and ownership to the Software.
+
+2. Authorized Use:
+   You are granted the right to use the Software solely for personal or internal purposes. Any commercial use, distribution, modification, or creation of derivative works based on the Software is prohibited without prior written permission from Licensor.
+
+3. Restrictions:
+   You may not:
+   a. Use the Software for any commercial purposes, including but not limited to selling, licensing, or providing services based on the Software.
+   b. Distribute, sublicense, or make the Software available to third parties.
+   c. Modify, reverse engineer, decompile, or otherwise attempt to derive the source code of the Software.
+   d. Use the Software, in whole or in part, to create research papers or academic publications.
+
+4. Contact Information:
+   For inquiries regarding licensing, permissions, or any other matters related to the Software, please contact bakhtiarhussain123@gmail.com.
+
+5. No Warranty and Liability:
+   The Software is provided "as is" without warranty of any kind, either express or implied, including but not limited to the implied warranties of merchantability, fitness for a particular purpose, or non-infringement. In no event shall Licensor be liable for any damages arising from the use of the Software.
+
+6. Termination:
+   This license is effective until terminated. Licensor may terminate this license at any time if you fail to comply with its terms. Upon termination, you must immediately cease all use of the Software.
+
+By using the Software, you acknowledge that you have read, understood, and agree to be bound by the terms and conditions of this license.
+
+Bakhtiar Hussain
+30-4-2023
