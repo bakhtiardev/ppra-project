@@ -5,6 +5,19 @@ Welcome to the PPRA Compliance Companion, a powerful NLP-powered web application
 Accessing and verifying tender documents against the rules set by the Public Procurement Regulatory Authority (PPRA) can be a time-consuming and laborious task. Extracting the required information from digital or handwritten documents and cross-referencing it with numerous PPRA rules can be overwhelming for humans. Therefore, we have automated this process and solved it using the power of Natural Language Processing (NLP) and Artificial Intelligence (AI).
 The PPRA Compliance Companion application analyzes the user-uploaded unseen documents, performs various preprocessing steps, and extracts all relevant details. It then checks each extracted detail against the applicable rules and provides a comprehensive report on which rules have been violated and which have been adhered to.
 
+## License
+The PPRA Compliance Companion software is distributed under the terms of the **PPRA Compliance Companion Custom License**, Version 1.0. This license is a proprietary license that grants you the right to use the software solely for personal or internal purposes. It prohibits commercial use, distribution to third parties, modification, reverse engineering, and the creation of derivative works based on the software without prior written permission from Bakhtiar Hussain(@bakhtiardev), the licensor.
+
+Additionally, this license explicitly restricts the use of the software, in whole or in part, to create research papers or academic publications. For more details on the terms and conditions of the license, please refer to the LICENSE(LICENSE) file in this repository.
+
+For any inquiries regarding licensing, permissions, or other matters related to the software, please contact bakhtiarhussain123@gmail.com.
+
+Please carefully review and understand the terms of the license before using the software. By using the PPRA Compliance Companion, you acknowledge your acceptance of and agreement to abide by the terms and conditions outlined in the license.
+
+Bakhtiar Hussain
+30-4-2023
+
+
 ## Project Composition
 ### NLP (Spacy)
 To achieve the desired results, we leveraged Spacy, a well-known NLP module in Python, to perform numerous NLP operations and preprocessing techniques.
