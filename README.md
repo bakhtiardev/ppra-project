@@ -14,7 +14,7 @@ For any inquiries regarding licensing, permissions, or other matters related to 
 
 Please carefully review and understand the terms of the license before using the software. By using the PPRA Compliance Companion, you acknowledge your acceptance of and agreement to abide by the terms and conditions outlined in the license.
 
-Bakhtiar Hussain
+Bakhtiar Hussain(@bakhtiardev)
 30-4-2023
 
 
